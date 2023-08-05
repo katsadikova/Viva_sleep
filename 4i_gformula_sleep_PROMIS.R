@@ -208,7 +208,7 @@ for(i in seq(1:20)){
                                             histvars = histvars,
                                             basecovs = basecovs,
                                             nsimul = 100000, 
-                                            nsamples = 100,
+                                            nsamples = 1000,
                                             boot_diag = T,
                                             seed = 1234)
   est <- round(gform_cont_eof$coeffs$C5_depr_tscore[2],2)

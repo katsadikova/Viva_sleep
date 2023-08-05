@@ -1318,53 +1318,53 @@ write.csv(depsleep17_adj, "/Users/Kat/Library/CloudStorage/OneDrive-HarvardUnive
 #----------------------------------------------------------
 #-- Dep & Sleep, adjusted for PDS
 
-g_dep12adj_actsleep <- data.frame(summary(pool(with(data = d_imp_g, exp = lm(feeling_score_ET ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+c_age_days_comp_d_qu_12y))))) %>%
+g_dep12adj_actsleep <- data.frame(summary(pool(with(data = d_imp_g, exp = lm(feeling_score_ET ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="Girls", x="Actigraphy sleep", y="12Y")
 g_dep12adj_actsleep
-g_dep14adj_actsleep <- data.frame(summary(pool(with(data = d_imp_g, exp = lm(feeling_score_14y ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+c_age_days_comp_d_qu_12y))))) %>%
+g_dep14adj_actsleep <- data.frame(summary(pool(with(data = d_imp_g, exp = lm(feeling_score_14y ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="Girls", x="Actigraphy sleep", y="14Y")
 g_dep14adj_actsleep
-g_dep15adj_actsleep <- data.frame(summary(pool(with(data = d_imp_g, exp = lm(feeling_score_15y ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+c_age_days_comp_d_qu_12y))))) %>%
+g_dep15adj_actsleep <- data.frame(summary(pool(with(data = d_imp_g, exp = lm(feeling_score_15y ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="Girls", x="Actigraphy sleep", y="15Y")
 g_dep15adj_actsleep
-g_dep16adj_actsleep <- data.frame(summary(pool(with(data = d_imp_g, exp = lm(feeling_score_16y ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+c_age_days_comp_d_qu_12y))))) %>%
+g_dep16adj_actsleep <- data.frame(summary(pool(with(data = d_imp_g, exp = lm(feeling_score_16y ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="Girls", x="Actigraphy sleep", y="16Y")
 g_dep16adj_actsleep
-g_dep17adj_actsleep <- data.frame(summary(pool(with(data = d_imp_g, exp = lm(C5_depr_tscore ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+c_age_days_comp_d_qu_12y))))) %>%
+g_dep17adj_actsleep <- data.frame(summary(pool(with(data = d_imp_g, exp = lm(C5_depr_tscore ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="Girls", x="Actigraphy sleep", y="17Y")
 g_dep17adj_actsleep
 
 #-- Look at relationships between dep, Tanner, and actigraphy-measured sleep in boys
-b_dep12adj_actsleep <- data.frame(summary(pool(with(data = d_imp_b, exp = lm(feeling_score_ET ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+c_age_days_comp_d_qu_12y))))) %>%
+b_dep12adj_actsleep <- data.frame(summary(pool(with(data = d_imp_b, exp = lm(feeling_score_ET ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="Boys", x="Actigraphy sleep", y="12Y")
 b_dep12adj_actsleep
-b_dep14adj_actsleep <- data.frame(summary(pool(with(data = d_imp_b, exp = lm(feeling_score_14y ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+c_age_days_comp_d_qu_12y))))) %>%
+b_dep14adj_actsleep <- data.frame(summary(pool(with(data = d_imp_b, exp = lm(feeling_score_14y ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="Boys", x="Actigraphy sleep", y="14Y")
 b_dep14adj_actsleep
-b_dep15adj_actsleep <- data.frame(summary(pool(with(data = d_imp_b, exp = lm(feeling_score_15y ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+c_age_days_comp_d_qu_12y))))) %>%
+b_dep15adj_actsleep <- data.frame(summary(pool(with(data = d_imp_b, exp = lm(feeling_score_15y ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="Boys", x="Actigraphy sleep", y="15Y")
 b_dep15adj_actsleep
-b_dep16adj_actsleep <- data.frame(summary(pool(with(data = d_imp_b, exp = lm(feeling_score_16y ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
+b_dep16adj_actsleep <- data.frame(summary(pool(with(data = d_imp_b, exp = lm(feeling_score_16y ~ avgsleeptime_wd_hr +tannerstg_12y+BMI_7y+ses_index_new_10pct+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="Boys", x="Actigraphy sleep", y="16Y")
 b_dep16adj_actsleep
-b_dep17adj_actsleep <- data.frame(summary(pool(with(data = d_imp_b, exp = lm(C5_depr_tscore ~avgsleeptime_wd_hr + tannerstg_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
+b_dep17adj_actsleep <- data.frame(summary(pool(with(data = d_imp_b, exp = lm(C5_depr_tscore ~avgsleeptime_wd_hr + tannerstg_12y+BMI_7y+ses_index_new_10pct+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="Boys", x="Actigraphy sleep", y="17Y")
 b_dep17adj_actsleep
 
 #-- Look at relationships between dep, Tanner, and actigraphy-measured sleep in total sample
-dep12adj_actsleep <- data.frame(summary(pool(with(data = d_imp, exp = lm(feeling_score_ET ~ avgsleeptime_wd_hr +tannerstg_12y+as.factor(sex)+BMI_7y+c_age_days_comp_d_qu_12y))))) %>%
+dep12adj_actsleep <- data.frame(summary(pool(with(data = d_imp, exp = lm(feeling_score_ET ~ avgsleeptime_wd_hr +tannerstg_12y+as.factor(sex)+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="All", x="Actigraphy sleep", y="12Y")
 dep12adj_actsleep
-dep14adj_actsleep <- data.frame(summary(pool(with(data = d_imp, exp = lm(feeling_score_14y ~ avgsleeptime_wd_hr +tannerstg_12y+as.factor(sex)+BMI_7y+c_age_days_comp_d_qu_12y))))) %>%
+dep14adj_actsleep <- data.frame(summary(pool(with(data = d_imp, exp = lm(feeling_score_14y ~ avgsleeptime_wd_hr +tannerstg_12y+as.factor(sex)+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="All", x="Actigraphy sleep", y="14Y")
 dep14adj_actsleep
-dep15adj_actsleep <- data.frame(summary(pool(with(data = d_imp, exp = lm(feeling_score_15y ~ avgsleeptime_wd_hr +tannerstg_12y+as.factor(sex)+BMI_7y+c_age_days_comp_d_qu_12y))))) %>%
+dep15adj_actsleep <- data.frame(summary(pool(with(data = d_imp, exp = lm(feeling_score_15y ~ avgsleeptime_wd_hr +tannerstg_12y+as.factor(sex)+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="All", x="Actigraphy sleep", y="15Y")
 dep15adj_actsleep
-dep16adj_actsleep <- data.frame(summary(pool(with(data = d_imp, exp = lm(feeling_score_16y ~ avgsleeptime_wd_hr +tannerstg_12y+as.factor(sex)+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
+dep16adj_actsleep <- data.frame(summary(pool(with(data = d_imp, exp = lm(feeling_score_16y ~ avgsleeptime_wd_hr +tannerstg_12y+as.factor(sex)+BMI_7y+ses_index_new_10pct+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="All", x="Actigraphy sleep", y="16Y")
 dep16adj_actsleep
-dep17adj_actsleep <- data.frame(summary(pool(with(data = d_imp, exp = lm(C5_depr_tscore ~avgsleeptime_wd_hr + tannerstg_12y+as.factor(sex)+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
+dep17adj_actsleep <- data.frame(summary(pool(with(data = d_imp, exp = lm(C5_depr_tscore ~avgsleeptime_wd_hr + tannerstg_12y+as.factor(sex)+BMI_7y+ses_index_new_10pct+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>%
   mutate(sex="All", x="Actigraphy sleep", y="17Y")
 dep17adj_actsleep
 
