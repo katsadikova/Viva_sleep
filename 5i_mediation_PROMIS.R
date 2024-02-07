@@ -1,6 +1,7 @@
 #----------------------------------------------------------------------#
-#--- 5i_mediation.R
+#--- 5i_mediation_PROMIS.R
 #--- Date: 7/3/2023
+#--- Date updated: 2/7/2024
 #----------------------------------------------------------------------#
 
 library(tidyverse)
@@ -60,55 +61,6 @@ nrow(complete(d_imp_b)) #585
 d_imp_g <- filter(d_imp, sex == "Female")
 nrow(complete(d_imp_g)) #553
 
-#-- Run regressions for PROMIS symptoms & the last instance of sleep duration (at 16Y), adjusted for PT, age, BMI
-
-g_dep17_slp <- data.frame(summary(pool(with(data = d_imp_g, exp = lm(C5_depr_tscore ~ sleep_weekday_cq16+tannerstg_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>% mutate(sex="Girls", x="Tanner", y="16Y") 
-g_dep17_slp
-b_dep17_slp <- data.frame(summary(pool(with(data = d_imp_b, exp = lm(C5_depr_tscore ~ sleep_weekday_cq16+tannerstg_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y))))) %>% mutate(sex="Boys", x="Tanner", y="16Y") 
-b_dep17_slp
-dep17_slp <- data.frame(summary(pool(with(data = d_imp, exp = lm(C5_depr_tscore ~ tannerstg_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y+as.factor(sex)))))) %>% mutate(sex="All", x="Tanner", y="17Y") 
-dep17_slp
-
-dep17_slp <- data.frame(summary(pool(with(data = d_imp, exp = lm(C5_depr_tscore ~ feeling_score_11y+tannerstg_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y+as.factor(sex)))))) %>% mutate(sex="All", x="Tanner", y="17Y") 
-dep17_slp
-
-dep17_slp <- data.frame(summary(pool(with(data = d_imp, exp = lm(C5_depr_tscore ~ feeling_score_11y+puberty_12y+BMI_7y+ses_index_new_10pct+c_age_days_comp_d_qu_12y+as.factor(sex)))))) %>% mutate(sex="All", x="Tanner", y="17Y") 
-dep17_slp
-
-
-#-- Mediation by actigraphy-measured ET sleep is not significant
-ests_17a <- list()
-for(i in seq(1:20)){
-  print(i)
-  d_imp_i <- complete(d_imp,i)
-  set.seed(23)
-  mediation.rb <- cmest(data = d_imp_i,
-                        model = "gformula",
-                        outcome = "C5_depr_tscore",
-                        exposure = "tannerstg_12y",
-                        mediator = c("avgsleeptime_wd_hr"),
-                        EMint = F,
-                        basec = c("BMI_7y","ses_index_new_10pct","c_age_days_comp_d_qu_12y","sex"),
-                        mreg = list("linear"),
-                        yreg = "linear",
-                        a = 2,
-                        astar = 1,
-                        mval = list(8),
-                        estimation = "imputation",
-                        inference = "bootstrap")
-  ests_17a[[i]]<-tibble::rownames_to_column(data.frame(summary(mediation.rb)$summarydf),"Effect")
-}
-ests_17a_d <- do.call(rbind.data.frame, ests_17a) 
-names(ests_17a_d) <- c("Effect","est","se","low","high","pval")
-
-ests_17a_mean <-ests_17a_d %>%
-  group_by(Effect) %>%
-  summarise(n_imp=n(),
-            est_mean=mean(est),
-            lowCI_mean=mean(low),
-            highCI_mean=mean(high))
-ests_17a_mean
-
 
 
 #-- Mediation by longitudinally self-reported weeknight sleep IS significant (Tanner --- Promis Dep).
@@ -142,6 +94,44 @@ ests_17_mean <-ests_17_d %>%
             lowCI_mean=mean(low),
             highCI_mean=mean(high))
 ests_17_mean
+
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------#
+#---- Testing other possibilities - not real chance of them panning out due to individual relationships not really being substantiated --#
+#-- Mediation by actigraphy-measured ET sleep is not significant
+ests_17a <- list()
+for(i in seq(1:20)){
+  print(i)
+  d_imp_i <- complete(d_imp,i)
+  set.seed(23)
+  mediation.rb <- cmest(data = d_imp_i,
+                        model = "gformula",
+                        outcome = "C5_depr_tscore",
+                        exposure = "tannerstg_12y",
+                        mediator = c("avgsleeptime_wd_hr"),
+                        EMint = F,
+                        basec = c("BMI_7y","ses_index_new_10pct","c_age_days_comp_d_qu_12y","sex"),
+                        mreg = list("linear"),
+                        yreg = "linear",
+                        a = 2,
+                        astar = 1,
+                        mval = list(8),
+                        estimation = "imputation",
+                        inference = "bootstrap")
+  ests_17a[[i]]<-tibble::rownames_to_column(data.frame(summary(mediation.rb)$summarydf),"Effect")
+}
+ests_17a_d <- do.call(rbind.data.frame, ests_17a) 
+names(ests_17a_d) <- c("Effect","est","se","low","high","pval")
+
+ests_17a_mean <-ests_17a_d %>%
+  group_by(Effect) %>%
+  summarise(n_imp=n(),
+            est_mean=mean(est),
+            lowCI_mean=mean(low),
+            highCI_mean=mean(high))
+ests_17a_mean
+
 
 #-- Mediation adjusted for post-baseline confounder of med-outcome relationship --> feeling_score_ET.
 ests_17 <- list()

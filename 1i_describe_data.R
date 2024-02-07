@@ -1,6 +1,7 @@
 #----------------------------------------------------------------------------#
-#--- 3i_descrive_data.R
+#--- 1i_describe_data.R
 #--- Date: 6/20/2023
+#--- Dat updated: 2/7/2024
 #--- Description: Create descriptive tables looking at distributions of 
 #---              pubertal timing measures, covariates, and outcomes
 #----------------------------------------------------------------------------#
@@ -59,6 +60,14 @@ d <- complete(d_imp) %>%
     age17 = age_years_comp_d_tq17
   )
 
+hist(d$puberty_7y)
+hist(d$puberty_10y)
+hist(d$puberty_11y)
+hist(d$puberty_12y)
+hist(d$puberty_14y)
+
+summary(as.factor(d$puberty_12y))
+
 ## Create table comparing distributions of pubertal timing measures and covariates by sex
 
 ## Make categorical variables factors
@@ -67,9 +76,9 @@ d[varsToFactor] <- lapply(d[varsToFactor], factor)
 
 ## Create a variable list
 vars <- c("ses_index_new_03","BMI_7y","age7","age12","age14","age15","age16","age17",
-          "age_peak_velocity_years","men_date_12y","puberty_12y","tannerstg_12y",
+          "age_peak_velocity_years","puberty_12y","tannerstg_12y",
           "avgsleeptime_wd","sleep_schoolday_cq14","sleep_weekday_child_cq15","sleep_weekday_cq16",
-          "feeling_score_ET","feeling_score_14y","feeling_score_15y","feeling_score_16y","C5_depr_tscore")
+          "C5_depr_tscore")
 
 ## Create Table 1 stratified by delay
 table_by_sex <- CreateTableOne(vars = vars,
@@ -91,7 +100,7 @@ length(table_by_sex$Characteristic)
 table_by_sex <- data.frame(table_by_sex) %>%
   mutate(
     rownames = case_when(
-      Characteristic=="ses_index_new_03 (mean (SD))" ~ "SVI (mean (SD))",
+      Characteristic=="ses_index_new_03 (mean (SD))" ~ "SES Index (mean (SD))",
       Characteristic=="BMI_7y (mean (SD))" ~ "Mid-childhood BMI (mean (SD))",
       Characteristic=="age7 (mean (SD))" ~ "Mid-childhood (mean (SD))",
       Characteristic=="age12 (mean (SD))" ~ "Early adolescence (mean (SD))",
@@ -100,17 +109,12 @@ table_by_sex <- data.frame(table_by_sex) %>%
       Characteristic=="age16 (mean (SD))" ~ "16-year (mean (SD))",
       Characteristic=="age17 (mean (SD))" ~ "17-year (mean (SD))",
       Characteristic=="age_peak_velocity_years (mean (SD))" ~ "APHV (mean (SD))",
-      Characteristic=="men_date_12y (mean (SD))" ~ "Age at menarche (mean (SD))",
       Characteristic=="puberty_12y (mean (SD))" ~ "PDS (mean (SD))",
       Characteristic=="tannerstg_12y (%)" ~ "Tanner pubic hair stage (n (%))",
       Characteristic=="avgsleeptime_wd (mean (SD))" ~ "Early adolescence visit, actigraphy, hours (mean (SD))",
       Characteristic=="sleep_schoolday_cq14 (mean (SD))" ~ "14-year visit, self-report, hours (mean (SD))",
       Characteristic=="sleep_weekday_child_cq15 (mean (SD))" ~ "15-year visit, self-report, hours (mean (SD))",
       Characteristic=="sleep_weekday_cq16 (mean (SD))" ~ "16-year visit, self-report, hours (mean (SD))",
-      Characteristic=="feeling_score_ET (mean (SD))" ~ "Early adolescence score (mean (SD))",
-      Characteristic=="feeling_score_14y (mean (SD))" ~ "14-year visit score (mean (SD))",
-      Characteristic=="feeling_score_15y (mean (SD))" ~ "15-year visit score (mean (SD))",
-      Characteristic=="feeling_score_16y (mean (SD))" ~ "16-year visit score (mean (SD))",
       Characteristic=="C5_depr_tscore (mean (SD))" ~ "Mid-adolescence PROMIS t-score (mean (SD))",
       T ~ Characteristic
     )
@@ -119,7 +123,7 @@ table_by_sex <- data.frame(table_by_sex) %>%
 
 table_by_sex
 
-write.csv(table_by_sex, file="/Users/Kat/Library/CloudStorage/OneDrive-HarvardUniversity/VDI/Viva/results_imp_chronological/table_by_sex.csv")
+write.csv(table_by_sex, file="/Users/Kat/Library/CloudStorage/OneDrive-HarvardUniversity/VDI/Viva/results_imp_chronological/table_1.csv")
 
 
 check_g <- d %>%

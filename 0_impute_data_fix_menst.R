@@ -1,4 +1,4 @@
-#~~ 0_impute_data_20x.R
+#~~ 0_impute_data_fix_menst.R
 #~~ Date: 4/27/2023
 #----------------------------------------
 
@@ -85,6 +85,7 @@ d_pre_imp <- d %>%
     mother_weight_12y_bin = case_when(mother_weight_12y==-9 ~ NA_real_,
                                       mother_weight_12y>1 ~ 1,
                                       mother_weight_12y==1 ~ 0),
+    #-- If date of menarche provided at a prior visit, replace current visit's date (more accurate on first account)
     c_age_days_men_date_10y = case_when(!is.na(c_age_days_men_date_9y) ~ c_age_days_men_date_9y,
                                         T ~ c_age_days_men_date_10y),
     c_age_days_men_date_11y = case_when(!is.na(c_age_days_men_date_10y) ~ c_age_days_men_date_10y,
@@ -108,7 +109,6 @@ d_pre_imp <- d %>%
          tannerstg_11y,puberty_11y,feeling_score_11y,
          age_peak_velocity_years,height_peak_height_velocity_cm,
          c_age_days_comp_d_qu_12y,
-         #tv_schoolday_12y,tv_weekend_12y,
          mother_weight_12y_bin,
          tannerstg_12y,men_date_12y, puberty_12y,avgsleeptime,avgsleeptime_wd,avgsleeptime_we,avgwaso,avgwaso_wd,avgwaso_we,
          avgefficiency,avgefficiency_wd,avgefficiency_we,agey_actigraph,feeling_score_ET,
@@ -128,9 +128,10 @@ save(d_pre_imp, file="/Users/Kat/Library/CloudStorage/OneDrive-HarvardUniversity
 #-- Imputation code source: https://rpubs.com/kaz_yos/mice-exclude
 
 ## Proportion missing
-prom_miss <- gather(d_pre_imp, key="aid") %>%
+prop_miss <- gather(d_pre_imp, key="aid") %>%
   group_by(aid) %>%
   summarize(prop_na = mean(is.na(value))) 
+prop_miss
 
 ## Configure parallelization
 ## Detect core count
@@ -242,7 +243,6 @@ M <- 20
 cat("### Imputing", M, "times\n")
 
 ## Set seed for reproducibility
-#set.seed(3561126)
 set.seed(317)
 ## Parallelized execution
 miceout <- foreach(i = seq_len(M), .combine = ibind) %dorng% {
